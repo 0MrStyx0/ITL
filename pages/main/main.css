@@ -1,0 +1,29 @@
+h1,
+h2 {
+    text-align: center;
+    font-weight: normal;
+    font-size: xx-large;
+}
+
+div.container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+div.list {
+    display: grid;
+    grid-auto-rows: auto;
+    border: solid thin;
+    width: 800px;
+}
+
+ol {
+    list-style-type: decimal;
+    margin-left: 20px;
+}
+
+li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
