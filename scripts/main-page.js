@@ -34,10 +34,7 @@ function addTask(event) {
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";
-
-    if(tasksList.children.length > 0) {
-        emptyList.style.display = 'none';
-    }
+    checkEmptyList();
 }
 
 function deleteTask(event) {
@@ -54,11 +51,9 @@ function deleteTask(event) {
         list.getList().splice(taskIndex,1);
 
         task.remove();
-
-        if(tasksList.children.length === 0) {
-            emptyList.style.display = 'block';
-        }
     }
+
+    checkEmptyList();
 }
 
 function doneTask(event) {
@@ -77,7 +72,14 @@ function doneTask(event) {
         else {
             doneTask.setStatus(false);
         }
+    }
+}
 
-        console.log(doneTask);
+function checkEmptyList() {
+    if(list.getList().length === 0) {
+        emptyList.style.display = 'block';
+    }
+    else {
+        emptyList.style.display = 'none';
     }
 }
