@@ -1,3 +1,6 @@
+@import url(/pages/main/task-list.css);
+@import url(/pages/main/add-task-form.css);
+
 h1,
 h2 {
     text-align: center;
@@ -9,38 +12,4 @@ div.container {
     margin-top: 30px;
     display: flex;
     justify-content: center;
-}
-
-div.list {
-    display: grid;
-    border: solid thin;
-    grid-auto-rows: auto;
-    width: 800px;
-}
-
-div.empty-list {
-    text-align: center;
-    font-size: 24px;
-}
-
-ol {
-    list-style-type: decimal;
-    margin-left: 20px;
-}
-
-li {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-
-input[type="checkbox"] {
-    margin-right: 440px;
-}
-
-button.edit,
-button.delete {
-    width: 100px;
-    height: 25px;
-    font-size: 15px;
 }

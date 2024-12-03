@@ -1,0 +1,27 @@
+div.add-task-form {
+    border: solid thin;
+    width: 500px;
+    text-align: center;
+}
+
+p.form-title {
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+form.add-task {
+    display: flex;
+    flex-direction: column;
+}
+
+input.task-name,
+input.task-description {
+    font-size: 18px;
+    margin: 10px;
+    height: 30px;
+}
+
+button.create-task {
+    font-size: 20px;
+}
