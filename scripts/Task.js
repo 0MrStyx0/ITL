@@ -1,12 +1,12 @@
-class Task {
-    static #id = 0;
+ export class Task {
+    #id;
     #name;
     #description;
     #date;
     #status = false;
 
     constructor(name, description){
-        Task.#id++;
+        this.#id = crypto.randomUUID();
         this.#name = name;
         this.#description = description;
         this.#date = this.#setDate();
@@ -25,8 +25,20 @@ class Task {
       
         return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
     }
+
+    getName() {
+        return this.#name;
+    }
+
+    getId() {
+        return this.#id;
+    }
 }
 
-class TaskList {
-    #list;
+export class TaskList {
+    #list = [];
+
+    addTask(task) {
+        this.#list.push(task);
+    }
 }
