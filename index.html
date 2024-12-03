@@ -7,6 +7,7 @@
     <meta name="author" content="Nazim Dovlatov">
     <title>Главная</title>
     <link rel="stylesheet" href="index.css">
+    <script defer src="/scripts/main-page.js"></script>
 </head>
 <body>
     <h1>ITL</h1>
@@ -15,28 +16,7 @@
     <div class="container">
         <div class="list">
             <div class="empty-list">Task List is Empty!</div>
-            <ol>
-                <li>Купить молоко
-                    <input type="checkbox">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
-                </li>
-                <li>Купить молоко
-                    <input type="checkbox">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
-                </li>
-                <li>Купить молоко
-                    <input type="checkbox">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
-                </li>
-                <li>Купить молоко
-                    <input type="checkbox">
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
-                </li>
-            </ol>
+            <ol class="tasks-list"></ol>
         </div>
     </div>
 
@@ -45,7 +25,7 @@
             <p class="form-title">Add New Task</p>
             <form class="add-task">
                 <input class="task-name" type="text" placeholder="Task Name">
-                <input class="task-description" placeholder="Description"></input>
+                <input class="task-description" type="text" placeholder="Description"></input>
                 <button class="create-task">Add</button>
             </form>
         </div>
