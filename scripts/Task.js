@@ -50,7 +50,27 @@ export class TaskList {
         this.#list.push(task);
     }
 
-    getList() {
-        return this.#list;
+    FindIndex(taskIndex,taskIdHTML) {
+        this.#list.findIndex(function (task, index) {
+            if(task.getId() === taskIdHTML) {
+                taskIndex = index;
+            }
+        });
+    }
+
+    Find(taskIdHTML) {
+        return this.#list.find(function (task) {
+            if(task.getId() === taskIdHTML) {
+                return true;
+            }
+        });
+    }
+
+    Splice(taskIndex) {
+        this.#list.splice(taskIndex,1);
+    }
+
+    getLength() {
+        return this.#list.length;
     }
 }

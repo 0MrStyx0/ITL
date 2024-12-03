@@ -42,17 +42,11 @@ function deleteTask(event) {
         const task = event.target.closest('li');
         const taskIdHTML = task.id;
         let taskIndex;
-        list.getList().findIndex(function (task, index) {
-            if(task.getId() === taskIdHTML) {
-                taskIndex = index;
-            }
-        });
 
-        list.getList().splice(taskIndex,1);
-
+        list.FindIndex(taskIndex,taskIdHTML);
+        list.Splice(taskIndex);
         task.remove();
     }
-
     checkEmptyList();
 }
 
@@ -60,11 +54,7 @@ function doneTask(event) {
     if(event.target.dataset.action === "done") {
         const task = event.target.closest('li');
         const taskIdHTML = task.id;
-        const doneTask = list.getList().find(function (task) {
-            if(task.getId() === taskIdHTML) {
-                return true;
-            }
-        });
+        const doneTask = list.Find(taskIdHTML);
 
         if(doneTask.getStatus() === false) {
             doneTask.setStatus(true);
@@ -76,7 +66,7 @@ function doneTask(event) {
 }
 
 function checkEmptyList() {
-    if(list.getList().length === 0) {
+    if(list.getLength() === 0) {
         emptyList.style.display = 'block';
     }
     else {
