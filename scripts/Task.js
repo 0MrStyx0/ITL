@@ -38,6 +38,14 @@
         return this.#status;
     }
 
+    getDescription() {
+        return this.#description;
+    }
+
+    getDate() {
+        return this.#date;
+    }
+
     setStatus(status) {
         this.#status = status;
     }
@@ -72,5 +80,19 @@ export class TaskList {
 
     getLength() {
         return this.#list.length;
+    }
+
+    toJson() {
+        return {
+            data: this.#list.map(function(task) {
+                return {
+                    id: task.getId(),
+                    name: task.getName(),
+                    description: task.getDescription(),
+                    date: task.getDate(),              
+                    status: task.getStatus()
+                }
+            })
+        }
     }
 }

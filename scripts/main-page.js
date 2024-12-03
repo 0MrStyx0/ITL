@@ -34,6 +34,7 @@ function addTask(event) {
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";
+    saveToLocalStorage();
     checkEmptyList();
 }
 
@@ -46,6 +47,7 @@ function deleteTask(event) {
         list.FindIndex(taskIndex,taskIdHTML);
         list.Splice(taskIndex);
         task.remove();
+        saveToLocalStorage();
     }
     checkEmptyList();
 }
@@ -62,6 +64,8 @@ function doneTask(event) {
         else {
             doneTask.setStatus(false);
         }
+
+        saveToLocalStorage();
     }
 }
 
@@ -72,4 +76,8 @@ function checkEmptyList() {
     else {
         emptyList.style.display = 'none';
     }
+}
+
+function saveToLocalStorage() {
+    localStorage.setItem('Tasks',JSON.stringify(list.toJson()));
 }
