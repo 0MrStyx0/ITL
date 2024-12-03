@@ -29,3 +29,8 @@ button.delete {
     height: 25px;
     font-size: 15px;
 }
+
+a.task-details {
+    text-decoration: none;
+    color: black;
+}

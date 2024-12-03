@@ -57,6 +57,14 @@
     setId(Id) {
         this.#id = Id;
     }
+
+    setName(name) {
+        this.#name = name;
+    }
+
+    setDescription(description) {
+        this.#description = description;
+    }
 }
 
 export class TaskList {

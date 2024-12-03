@@ -82,19 +82,22 @@ function loadFromLocalStorage() {
     if (data !== null) {
         const parsedData = JSON.parse(data);
         return TaskList.fromJson(parsedData);
-    } else {
+    } 
+    else {
         return new TaskList();
     }
 }
 
 function renderTask(task) {
 
-    const taskHtml = `<li id="${task.getId()}">${task.getName()}
-    <input type="checkbox" data-action="done">
-    <button class="edit">Edit</button>
-    <button class="delete" data-action="delete">Delete</button>
-</li>`;
+    const taskHtml = `<li id="${task.getId()}">
+                    <a href="/pages/details/details.html?id=${task.getId()}" class="task-details">${task.getName()}</a>
+                    <input type="checkbox" data-action="done" ${task.getStatus() ? 'checked' : ''}>
+                    <button class="edit">Edit</button>
+                    <button class="delete" data-action="delete">Delete</button>
+                </li>`;
 
 
 tasksList.insertAdjacentHTML('beforeend',taskHtml);
+checkEmptyList();
 }
