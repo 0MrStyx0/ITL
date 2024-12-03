@@ -6,7 +6,8 @@ const taskDescriptionInput = form.querySelector('input.task-description');
 const tasksList = document.querySelector('ol.tasks-list');
 const emptyList = document.querySelector('div.empty-list');
 
-const list = new TaskList();
+const list = loadFromLocalStorage();
+list.ForEach(renderTask);
 
 form.addEventListener('submit', addTask);
 
@@ -23,14 +24,7 @@ function addTask(event) {
     const task = new Task(taskName, taskDescription);
     list.addTask(task);
 
-    const taskHtml = `<li id="${task.getId()}">${task.getName()}
-                    <input type="checkbox" data-action="done">
-                    <button class="edit">Edit</button>
-                    <button class="delete" data-action="delete">Delete</button>
-                </li>`;
-
-
-    tasksList.insertAdjacentHTML('beforeend',taskHtml);
+    renderTask(task);
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";
@@ -80,4 +74,27 @@ function checkEmptyList() {
 
 function saveToLocalStorage() {
     localStorage.setItem('Tasks',JSON.stringify(list.toJson()));
+}
+
+function loadFromLocalStorage() {
+    const data = localStorage.getItem('Tasks');
+
+    if (data !== null) {
+        const parsedData = JSON.parse(data);
+        return TaskList.fromJson(parsedData);
+    } else {
+        return new TaskList();
+    }
+}
+
+function renderTask(task) {
+
+    const taskHtml = `<li id="${task.getId()}">${task.getName()}
+    <input type="checkbox" data-action="done">
+    <button class="edit">Edit</button>
+    <button class="delete" data-action="delete">Delete</button>
+</li>`;
+
+
+tasksList.insertAdjacentHTML('beforeend',taskHtml);
 }

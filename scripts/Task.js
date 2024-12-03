@@ -49,6 +49,14 @@
     setStatus(status) {
         this.#status = status;
     }
+
+    setDate(date) {
+        this.#date = date;
+    }
+
+    setId(Id) {
+        this.#id = Id;
+    }
 }
 
 export class TaskList {
@@ -78,6 +86,12 @@ export class TaskList {
         this.#list.splice(taskIndex,1);
     }
 
+    ForEach(renderTask) {
+        this.#list.forEach(function(task) {
+            renderTask(task);
+        })
+    }
+
     getLength() {
         return this.#list.length;
     }
@@ -94,5 +108,19 @@ export class TaskList {
                 }
             })
         }
+    }
+
+    static fromJson(data) {
+        const taskList = new TaskList();
+
+        data.data.forEach(item => {
+            const task = new Task(item.name, item.description);
+            task.setStatus(item.status);
+            task.setDate(item.date);
+            task.setId(item.id);
+            taskList.addTask(task);
+        });
+    
+        return taskList;
     }
 }
