@@ -33,6 +33,14 @@
     getId() {
         return this.#id;
     }
+
+    getStatus() {
+        return this.#status;
+    }
+
+    setStatus(status) {
+        this.#status = status;
+    }
 }
 
 export class TaskList {

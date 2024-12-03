@@ -12,6 +12,8 @@ form.addEventListener('submit', addTask);
 
 tasksList.addEventListener('click', deleteTask);
 
+tasksList.addEventListener('click', doneTask);
+
 function addTask(event) {
     event.preventDefault();
 
@@ -56,5 +58,26 @@ function deleteTask(event) {
         if(tasksList.children.length === 0) {
             emptyList.style.display = 'block';
         }
+    }
+}
+
+function doneTask(event) {
+    if(event.target.dataset.action === "done") {
+        const task = event.target.closest('li');
+        const taskIdHTML = task.id;
+        const doneTask = list.getList().find(function (task) {
+            if(task.getId() === taskIdHTML) {
+                return true;
+            }
+        });
+
+        if(doneTask.getStatus() === false) {
+            doneTask.setStatus(true);
+        }
+        else {
+            doneTask.setStatus(false);
+        }
+
+        console.log(doneTask);
     }
 }
