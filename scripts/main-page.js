@@ -41,6 +41,16 @@ function addTask(event) {
 function deleteTask(event) {
     if(event.target.dataset.action === 'delete') {
         const task = event.target.closest('li');
+        const taskIdHTML = task.id;
+        let taskIndex;
+        list.getList().findIndex(function (task, index) {
+            if(task.getId() === taskIdHTML) {
+                taskIndex = index;
+            }
+        });
+
+        list.getList().splice(taskIndex,1);
+
         task.remove();
 
         if(tasksList.children.length === 0) {

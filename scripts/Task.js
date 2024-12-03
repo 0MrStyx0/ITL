@@ -41,4 +41,8 @@ export class TaskList {
     addTask(task) {
         this.#list.push(task);
     }
+
+    getList() {
+        return this.#list;
+    }
 }
