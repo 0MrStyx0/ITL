@@ -1,5 +1,5 @@
 import { TaskList } from './Task.js';
-import { getSelectedTask, backToMain } from './mini-library.js';
+import { getSelectedTask, backToMain, validateTask } from './mini-library.js';
 
 const task = getSelectedTask(TaskList);
 
@@ -19,11 +19,11 @@ if(task) {
 form.addEventListener('submit', changeInfo);
 
 taskNameInput.addEventListener('input', () => {
-    validateTask(taskNameInput.value, taskDescriptionInput.value);
+    validateTask(taskNameInput.value, taskDescriptionInput.value,nameError,descriptionError);
 });
 
 taskDescriptionInput.addEventListener('input', () => {
-    validateTask(taskNameInput.value, taskDescriptionInput.value);
+    validateTask(taskNameInput.value, taskDescriptionInput.value,nameError,descriptionError);
 });
 
 function changeInfo(event) {
@@ -32,7 +32,7 @@ function changeInfo(event) {
     const newName = document.getElementById('edit-task-name').value;
     const newDescription = document.getElementById('edit-task-description').value;
 
-    if(validateTask(newName, newDescription)) {
+    if(validateTask(newName, newDescription,nameError,descriptionError)) {
         const updatedTask = list.Find(task.getId());
     
         if (updatedTask) {
@@ -43,34 +43,6 @@ function changeInfo(event) {
         localStorage.setItem('Tasks', JSON.stringify(list.toJson()));
         window.location.href = '/index.html';
     }
-}
-
-function validateTask(title, description) {
-    const titlePattern = /^(?=.*\D)([a-zA-Zа-яА-Я0-9]+( [a-zA-Zа-яА-Я0-9]+)+)$/;
-    const descriptionPattern = /^(?!\s*$).+/;
-
-    let isValid = true;
-    
-    
-    if (!titlePattern.test(title.trim())) {
-        nameError.textContent = "Title must contain at least two words.";
-        isValid = false;
-    } else {
-        nameError.textContent = "";
-    }
-
-    
-    if (!descriptionPattern.test(description.trim())) {
-        descriptionError.textContent = "Description cannot be empty.";
-        isValid = false;
-    } else if (title.trim() === description.trim()) {
-        descriptionError.textContent = "Description cannot match the title.";
-        isValid = false;
-    } else {
-        descriptionError.textContent = "";
-    }
-
-    return isValid;
 }
 
 backToMain();

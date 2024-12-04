@@ -1,4 +1,5 @@
 import {Task , TaskList} from './Task.js';
+import { validateTask } from './mini-library.js';
 
 const form = document.querySelector('form.add-task');
 const taskNameInput = form.querySelector('input.task-name');
@@ -29,11 +30,11 @@ sortSelect.addEventListener('change', updateTaskList);
 filterSelect.addEventListener('change', updateTaskList);
 
 taskNameInput.addEventListener('input', () => {
-    validateTask(taskNameInput.value, taskDescriptionInput.value);
+    validateTask(taskNameInput.value, taskDescriptionInput.value,nameError,descriptionError);
 });
 
 taskDescriptionInput.addEventListener('input', () => {
-    validateTask(taskNameInput.value, taskDescriptionInput.value);
+    validateTask(taskNameInput.value, taskDescriptionInput.value,nameError,descriptionError);
 });
 
 function addTask(event) {
@@ -42,7 +43,7 @@ function addTask(event) {
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
 
-    if (validateTask(taskName, taskDescription)) {
+    if (validateTask(taskName, taskDescription,nameError,descriptionError)) {
         const task = new Task(taskName, taskDescription);
         list.addTask(task);
         saveToLocalStorage();
@@ -157,32 +158,4 @@ function getSortedFilteredTasks() {
     tasks.forEach(task => sortedFilteredTaskList.addTask(task));
 
     return sortedFilteredTaskList;
-}
-
-function validateTask(title, description) {
-    const titlePattern = /^(?=.*\D)([a-zA-Zа-яА-Я0-9]+( [a-zA-Zа-яА-Я0-9]+)+)$/;
-    const descriptionPattern = /^(?!\s*$).+/;
-
-    let isValid = true;
-    
-    
-    if (!titlePattern.test(title.trim())) {
-        nameError.textContent = "Title must contain at least two words.";
-        isValid = false;
-    } else {
-        nameError.textContent = "";
-    }
-
-    
-    if (!descriptionPattern.test(description.trim())) {
-        descriptionError.textContent = "Description cannot be empty.";
-        isValid = false;
-    } else if (title.trim() === description.trim()) {
-        descriptionError.textContent = "Description cannot match the title.";
-        isValid = false;
-    } else {
-        descriptionError.textContent = "";
-    }
-
-    return isValid;
 }

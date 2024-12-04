@@ -13,3 +13,31 @@ export function backToMain() {
         window.location.href = '/index.html';
     })
 }
+
+export function validateTask(title, description,nameError,descriptionError) {
+    const titlePattern = /^(?=.*[a-zA-Zа-яА-Я])([a-zA-Zа-яА-Я0-9]+( [a-zA-Zа-яА-Я0-9]+)+)$/;
+    const descriptionPattern = /^(?!\s*$).+/;
+
+    let isValid = true;
+    
+    
+    if (!titlePattern.test(title.trim())) {
+        nameError.textContent = "Title must contain at least two words.";
+        isValid = false;
+    } else {
+        nameError.textContent = "";
+    }
+
+    
+    if (!descriptionPattern.test(description.trim())) {
+        descriptionError.textContent = "Description cannot be empty.";
+        isValid = false;
+    } else if (title.trim() === description.trim()) {
+        descriptionError.textContent = "Description cannot match the title.";
+        isValid = false;
+    } else {
+        descriptionError.textContent = "";
+    }
+
+    return isValid;
+}
