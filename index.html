@@ -16,6 +16,20 @@
     <div class="container">
         <div class="list">
             <div class="empty-list">Task List is Empty!</div>
+            <div class="sorting-filtering">
+                <label for="sort-tasks">Sort By:</label>
+                <select id="sort-tasks">
+                    <option value="date">Date</option>
+                    <option value="name">Name</option>
+                </select>
+            
+                <label for="filter-tasks">Filter By:</label>
+                <select id="filter-tasks">
+                    <option value="all">All</option>
+                    <option value="done">Done</option>
+                    <option value="undone">Undone</option>
+                </select>
+            </div>
             <ol class="tasks-list">
             </ol>
         </div>

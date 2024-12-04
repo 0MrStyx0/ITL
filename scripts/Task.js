@@ -94,14 +94,16 @@ export class TaskList {
         this.#list.splice(taskIndex,1);
     }
 
-    ForEach(renderTask) {
-        this.#list.forEach(function(task) {
-            renderTask(task);
-        })
+    ForEach(callback) {
+        this.#list.forEach(callback);
     }
 
     getLength() {
         return this.#list.length;
+    }
+
+    getTasks() {
+        return [...this.#list];
     }
 
     toJson() {

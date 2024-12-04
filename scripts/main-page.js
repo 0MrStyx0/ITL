@@ -6,6 +6,11 @@ const taskDescriptionInput = form.querySelector('input.task-description');
 const tasksList = document.querySelector('ol.tasks-list');
 const emptyList = document.querySelector('div.empty-list');
 
+const sortSelect = document.getElementById('sort-tasks');
+const filterSelect = document.getElementById('filter-tasks');
+
+
+
 const list = loadFromLocalStorage();
 list.ForEach(renderTask);
 
@@ -17,20 +22,25 @@ tasksList.addEventListener('click', doneTask);
 
 tasksList.addEventListener('click', editTask);
 
+sortSelect.addEventListener('change', updateTaskList);
+
+filterSelect.addEventListener('change', updateTaskList);
+
 function addTask(event) {
     event.preventDefault();
 
-    const taskName = taskNameInput.value;
-    const taskDescription = taskDescriptionInput.value;
+    const taskName = taskNameInput.value.trim();
+    const taskDescription = taskDescriptionInput.value.trim();
 
-    const task = new Task(taskName, taskDescription);
-    list.addTask(task);
-
-    renderTask(task);
+    if (taskName && taskDescription) {
+        const task = new Task(taskName, taskDescription);
+        list.addTask(task);
+        saveToLocalStorage();
+        updateTaskList();
+    }
 
     taskNameInput.value = "";
     taskDescriptionInput.value = "";
-    saveToLocalStorage();
     checkEmptyList();
 }
 
@@ -49,20 +59,18 @@ function deleteTask(event) {
 }
 
 function doneTask(event) {
-    if(event.target.dataset.action === "done") {
+    if (event.target.dataset.action === "done") {
         const task = event.target.closest('li');
         const taskIdHTML = task.id;
         const doneTask = list.Find(taskIdHTML);
 
-        if(doneTask.getStatus() === false) {
-            doneTask.setStatus(true);
+        if (doneTask) {
+            doneTask.setStatus(!doneTask.getStatus());
+            saveToLocalStorage();
+            updateTaskList();
         }
-        else {
-            doneTask.setStatus(false);
-        }
-
-        saveToLocalStorage();
     }
+
 }
 
 function editTask(event) {
@@ -110,4 +118,33 @@ function renderTask(task) {
 
 tasksList.insertAdjacentHTML('beforeend',taskHtml);
 checkEmptyList();
+}
+
+function updateTaskList() {
+    const sortedFilteredTasks = getSortedFilteredTasks();
+    tasksList.innerHTML = '';
+    sortedFilteredTasks.ForEach(renderTask);
+}
+
+function getSortedFilteredTasks() {
+    let tasks = list.getTasks();
+
+    const filterValue = filterSelect.value;
+    if (filterValue === 'done') {
+        tasks = tasks.filter(task => task.getStatus() === true);
+    } else if (filterValue === 'undone') {
+        tasks = tasks.filter(task => task.getStatus() === false);
+    }
+
+    const sortValue = sortSelect.value;
+    if (sortValue === 'date') {
+        tasks.sort((a, b) => new Date(b.getDate()) - new Date(a.getDate()));
+    } else if (sortValue === 'name') {
+        tasks.sort((a, b) => a.getName().localeCompare(b.getName()));
+    }
+
+    const sortedFilteredTaskList = new TaskList();
+    tasks.forEach(task => sortedFilteredTaskList.addTask(task));
+
+    return sortedFilteredTaskList;
 }
