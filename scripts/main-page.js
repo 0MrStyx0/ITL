@@ -15,6 +15,8 @@ tasksList.addEventListener('click', deleteTask);
 
 tasksList.addEventListener('click', doneTask);
 
+tasksList.addEventListener('click', editTask);
+
 function addTask(event) {
     event.preventDefault();
 
@@ -63,6 +65,14 @@ function doneTask(event) {
     }
 }
 
+function editTask(event) {
+    if(event.target.dataset.action === "edit") {
+        const task = event.target.closest('li');
+        const taskIdHTML = task.id;
+        window.location.href = `pages/edit/edit.html?id=${taskIdHTML}`;
+    }
+}
+
 function checkEmptyList() {
     if(list.getLength() === 0) {
         emptyList.style.display = 'block';
@@ -93,7 +103,7 @@ function renderTask(task) {
     const taskHtml = `<li id="${task.getId()}">
                     <a href="/pages/details/details.html?id=${task.getId()}" class="task-details">${task.getName()}</a>
                     <input type="checkbox" data-action="done" ${task.getStatus() ? 'checked' : ''}>
-                    <button class="edit">Edit</button>
+                    <button class="edit" data-action="edit">Edit</button>
                     <button class="delete" data-action="delete">Delete</button>
                 </li>`;
 
