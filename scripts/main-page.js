@@ -3,6 +3,8 @@ import {Task , TaskList} from './Task.js';
 const form = document.querySelector('form.add-task');
 const taskNameInput = form.querySelector('input.task-name');
 const taskDescriptionInput = form.querySelector('input.task-description');
+const nameError = document.getElementById('name-error');
+const descriptionError = document.getElementById('description-error');
 const tasksList = document.querySelector('ol.tasks-list');
 const emptyList = document.querySelector('div.empty-list');
 
@@ -26,13 +28,21 @@ sortSelect.addEventListener('change', updateTaskList);
 
 filterSelect.addEventListener('change', updateTaskList);
 
+taskNameInput.addEventListener('input', () => {
+    validateTask(taskNameInput.value, taskDescriptionInput.value);
+});
+
+taskDescriptionInput.addEventListener('input', () => {
+    validateTask(taskNameInput.value, taskDescriptionInput.value);
+});
+
 function addTask(event) {
     event.preventDefault();
 
     const taskName = taskNameInput.value.trim();
     const taskDescription = taskDescriptionInput.value.trim();
 
-    if (taskName && taskDescription) {
+    if (validateTask(taskName, taskDescription)) {
         const task = new Task(taskName, taskDescription);
         list.addTask(task);
         saveToLocalStorage();
@@ -147,4 +157,32 @@ function getSortedFilteredTasks() {
     tasks.forEach(task => sortedFilteredTaskList.addTask(task));
 
     return sortedFilteredTaskList;
+}
+
+function validateTask(title, description) {
+    const titlePattern = /^(?=.*\D)([a-zA-Zа-яА-Я0-9]+( [a-zA-Zа-яА-Я0-9]+)+)$/;
+    const descriptionPattern = /^(?!\s*$).+/;
+
+    let isValid = true;
+    
+    
+    if (!titlePattern.test(title.trim())) {
+        nameError.textContent = "Title must contain at least two words.";
+        isValid = false;
+    } else {
+        nameError.textContent = "";
+    }
+
+    
+    if (!descriptionPattern.test(description.trim())) {
+        descriptionError.textContent = "Description cannot be empty.";
+        isValid = false;
+    } else if (title.trim() === description.trim()) {
+        descriptionError.textContent = "Description cannot match the title.";
+        isValid = false;
+    } else {
+        descriptionError.textContent = "";
+    }
+
+    return isValid;
 }

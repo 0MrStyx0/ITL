@@ -13,3 +13,8 @@ div.container {
     display: flex;
     justify-content: center;
 }
+
+.error {
+    color: red;
+    margin-top: 5px;
+}
